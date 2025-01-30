@@ -19,6 +19,8 @@ local soundPaths1 = {
     "Interface\\AddOns\\DDPoulet\\data\\DDPoulet4.mp3"
 }
 local soundPath2 = "Interface\\AddOns\\DDPoulet\\data\\ChickenDeathA.ogg"  -- Son du poulet
+local soundPathMoula = "Interface\\AddOns\\DDPoulet\\data\\heymoula.mp3"  -- Nouveau son pour "moula"
+local soundPathHakaza = "Interface\\AddOns\\DDPoulet\\data\\hakaza_fourmis.mp3"  -- Nouveau son pour "hakaza fourmis"
 
 -- Fonction pour jouer un son aléatoire parmi les variantes de soundPaths1
 local function PlayRandomChickenSound()
@@ -27,7 +29,6 @@ local function PlayRandomChickenSound()
         local soundFile = soundPaths1[randomIndex]  -- Récupère le chemin du son
         
         if soundFile then
-            print("Lecture du son : " .. soundFile)  -- Debug : voir quel fichier est joué
             PlaySoundFile(soundFile, "Master")  -- Joue le son aléatoire
         else
             print("Erreur : Aucun fichier son trouvé !")
@@ -35,6 +36,16 @@ local function PlayRandomChickenSound()
     else
         print("Erreur : Aucune variante de son disponible !")
     end
+end
+
+-- Fonction pour jouer le son "moula"
+local function PlayMoulaSound()
+    PlaySoundFile(soundPathMoula, "Master")  -- Joue le son "moula"
+end
+
+-- Fonction pour jouer le son "hakaza fourmis"
+local function PlayHakazaSound()
+    PlaySoundFile(soundPathHakaza, "Master")  -- Joue le son "hakaza_fourmis"
 end
 
 -- Initialisation de la base de données si elle n'existe pas
@@ -64,6 +75,14 @@ end
 local function OnEvent(self, event, message, sender, ...)
     if message:lower():find("doigt de poulet") then  -- Vérifie si le message contient "doigt de poulet"
         ShowImageAndSound()
+    elseif message:lower():find("moula") then  -- Vérifie si le message contient "moula"
+        if DDPouletDB.playSound then
+            PlayMoulaSound()  -- Joue le son "moula"
+        end
+    elseif message:lower():find("hakaza fourmis") then  -- Vérifie si le message contient "hakaza fourmis"
+        if DDPouletDB.playSound then
+            PlayHakazaSound()  -- Joue le son "hakaza fourmis"
+        end
     end
 end
 

@@ -92,7 +92,7 @@ welcomeFrame.title:SetText("DDPoulet, bienvenue")
 -- Ajouter un message de bienvenue dans la fenêtre avec une police plus petite
 local welcomeMessage = welcomeFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 welcomeMessage:SetPoint("TOP", welcomeFrame, "TOP", 0, -30)
-welcomeMessage:SetText("\nLa tant attendu V2 de Doigt De Poulet est la !\nMerci a personne\n\nDoigt de poulet dans le chat !\n\nHAKAZA FOURMIS !\nHEY MOULA ?\nCréé par Daeler l'aspirateur")
+welcomeMessage:SetText("\nWow la 2.1 de Doigt De Poulet est la !\nTU DEKALISS ESPECE DE **** *****\n\nDoigt de poulet dans le chat !\n\nHAKAZA FOURMIS !\nHEY MOULA ?\nCréé par Daeler l'annihilateur")
 
 -- Ajouter l'icône de DDPoulet dans la fenêtre de bienvenue (positionnée en bas à droite)
 local icon = welcomeFrame:CreateTexture(nil, "OVERLAY")
@@ -120,3 +120,10 @@ else
     -- Si la fenêtre a déjà été montrée, ne pas la réafficher
     welcomeFrame:Hide()
 end
+
+--- Ajouter une texture centrée dans la fenêtre des options
+local background = panel:CreateTexture(nil, "ARTWORK")
+background:SetTexture("Interface\\AddOns\\DDPoulet\\data\\Hakaza_fourmis.tga")  -- Chemin de ton image
+background:SetSize(550, 350)  -- Ajuste la largeur et la hauteur selon ton besoin
+background:SetPoint("CENTER", panel, "CENTER", 0, -50)  -- Centre l’image dans la fenêtre
+
