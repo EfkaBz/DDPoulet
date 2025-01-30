@@ -11,9 +11,31 @@ frame:RegisterEvent("CHAT_MSG_WHISPER")
 frame:RegisterEvent("CHAT_MSG_CHANNEL")
 
 -- Chemins vers l'image et les sons
-local imagePath = "Interface\\AddOns\\DDPoulet\\data\\DDPoulet.tga"  -- Chemin de l'image
-local soundPath1 = "Interface\\AddOns\\DDPoulet\\data\\DDPoulet.mp3"  -- Son personnalisé
+local imagePath = "Interface\\AddOns\\DDPoulet\\data\\DDPoulet.tga"  -- Image principale
+local soundPaths1 = {  
+    "Interface\\AddOns\\DDPoulet\\data\\DDPoulet.mp3",
+    "Interface\\AddOns\\DDPoulet\\data\\DDPoulet2.mp3",
+    "Interface\\AddOns\\DDPoulet\\data\\DDPoulet3.mp3",
+    "Interface\\AddOns\\DDPoulet\\data\\DDPoulet4.mp3"
+}
 local soundPath2 = "Interface\\AddOns\\DDPoulet\\data\\ChickenDeathA.ogg"  -- Son du poulet
+
+-- Fonction pour jouer un son aléatoire parmi les variantes de soundPaths1
+local function PlayRandomChickenSound()
+    if #soundPaths1 > 0 then
+        local randomIndex = math.random(1, #soundPaths1)  -- Sélectionne un son aléatoire
+        local soundFile = soundPaths1[randomIndex]  -- Récupère le chemin du son
+        
+        if soundFile then
+            print("Lecture du son : " .. soundFile)  -- Debug : voir quel fichier est joué
+            PlaySoundFile(soundFile, "Master")  -- Joue le son aléatoire
+        else
+            print("Erreur : Aucun fichier son trouvé !")
+        end
+    else
+        print("Erreur : Aucune variante de son disponible !")
+    end
+end
 
 -- Initialisation de la base de données si elle n'existe pas
 DDPouletDB = DDPouletDB or { showImage = true, playSound = true }
@@ -33,8 +55,8 @@ local function ShowImageAndSound()
     end
 
     if DDPouletDB.playSound then
-        PlaySoundFile(soundPath1, "Master")
-        C_Timer.After(2, function() PlaySoundFile(soundPath2, "Master") end)
+        PlayRandomChickenSound()  -- Joue un son aléatoire
+        C_Timer.After(2, function() PlaySoundFile(soundPath2, "Master") end)  -- Joue le son du poulet après 2s
     end
 end
 
@@ -46,3 +68,9 @@ local function OnEvent(self, event, message, sender, ...)
 end
 
 frame:SetScript("OnEvent", OnEvent)
+
+-- Débogage rapide : test manuel avec /ddptest
+SLASH_DDPTEST1 = "/ddptest"
+SlashCmdList["DDPTEST"] = function()
+    ShowImageAndSound()
+end

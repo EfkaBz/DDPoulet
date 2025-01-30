@@ -1,8 +1,8 @@
 ## Interface: 11305
 ## Title: Doigt de poulet
 ## Author: Daeler
-## Version: 1.0
-## Notes: Hmmmm🍗
+## Version: 2.0
+## Notes: Hmmmm poulet
 DDPoulet.lua
 Options.lua
 
