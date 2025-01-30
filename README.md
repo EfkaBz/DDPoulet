@@ -29,3 +29,6 @@ Why use DDPoulet?
 Because everyone loves chicken, and this little addon lets you express your passion for poultry in a unique way in World of Warcraft! Whether you're playing solo or raiding, every time you open your interface, it will be a moment to smile with DDPoulet.
 
 Add some humor to your game and join the community of chicken lovers! 🍗🍗
+
+https://legacy.curseforge.com/wow/addons/doigt-de-poulet
+https://legacy.curseforge.com/wow/addons/doigt-de-poulet
