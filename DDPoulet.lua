@@ -21,6 +21,8 @@ local soundPaths1 = {
 local soundPath2 = "Interface\\AddOns\\DDPoulet\\data\\ChickenDeathA.ogg"  -- Son du poulet
 local soundPathMoula = "Interface\\AddOns\\DDPoulet\\data\\heymoula.mp3"  -- Nouveau son pour "moula"
 local soundPathHakaza = "Interface\\AddOns\\DDPoulet\\data\\hakaza_fourmis.mp3"  -- Nouveau son pour "hakaza fourmis"
+local soundPathResistar = "Interface\\AddOns\\DDPoulet\\data\\resistar1.mp3"
+local soundPathResistar2 = "Interface\\AddOns\\DDPoulet\\data\\resistar_aidezmoi.mp3"
 
 -- Fonction pour jouer un son aléatoire parmi les variantes de soundPaths1
 local function PlayRandomChickenSound()
@@ -46,6 +48,16 @@ end
 -- Fonction pour jouer le son "hakaza fourmis"
 local function PlayHakazaSound()
     PlaySoundFile(soundPathHakaza, "Master")  -- Joue le son "hakaza_fourmis"
+end
+
+-- Fonction pour jouer le son "resistar aidez moi"
+local function PlayResistarSound()
+    PlaySoundFile(soundPathResistar2, "Master")  -- Joue le son "resistar_aidezmoi"
+end
+
+-- Fonction pour jouer le son "resistar1" (quand "putain" est détecté)
+local function PlayResistar1Sound()
+    PlaySoundFile(soundPathResistar, "Master")  -- Joue le son "resistar1.mp3"
 end
 
 -- Initialisation de la base de données si elle n'existe pas
@@ -83,6 +95,10 @@ local function OnEvent(self, event, message, sender, ...)
         if DDPouletDB.playSound then
             PlayHakazaSound()  -- Joue le son "hakaza fourmis"
         end
+    elseif message:lower():find("putain") then  -- Vérifie si le message contient "putain"
+        if DDPouletDB.playSound then
+            PlayResistar1Sound()  -- Joue le son "resistar1.mp3"
+        end
     end
 end
 
@@ -92,4 +108,21 @@ frame:SetScript("OnEvent", OnEvent)
 SLASH_DDPTEST1 = "/ddptest"
 SlashCmdList["DDPTEST"] = function()
     ShowImageAndSound()
+end
+
+-- Test de "resistar aidez moi" avec /ddpResistarTest
+SLASH_DDPRESISTARTEST1 = "/ddpResistarTest"
+SlashCmdList["DDPRESISTARTEST"] = function()
+    -- Simule une vie inférieure à 20% pour tester le son
+    local health = UnitHealth("player")  -- Récupère la santé actuelle du joueur
+    local maxHealth = UnitHealthMax("player")  -- Récupère la santé maximale du joueur
+    local healthPercent = (health / maxHealth) * 100  -- Calcul du pourcentage de vie restante
+
+    -- Si la vie est inférieure à 20%, joue le son, sinon force le test
+    if healthPercent < 20 then
+        PlaySoundFile(soundPathResistar2, "Master")
+    else
+        print("Test forcé : Simule une vie inférieure à 20%.")
+        PlaySoundFile(soundPathResistar2, "Master")  -- Joue le son "resistar_aidezmoi.mp3"
+    end
 end
