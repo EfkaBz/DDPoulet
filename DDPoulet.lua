@@ -9,6 +9,7 @@ frame:RegisterEvent("CHAT_MSG_RAID")
 frame:RegisterEvent("CHAT_MSG_RAID_LEADER")
 frame:RegisterEvent("CHAT_MSG_WHISPER")
 frame:RegisterEvent("CHAT_MSG_CHANNEL")
+frame:RegisterEvent("UNIT_HEALTH")  -- Ajout de l'événement pour surveiller la santé
 
 -- Chemins vers l'image et les sons
 local imagePath = "Interface\\AddOns\\DDPoulet\\data\\DDPoulet.tga"  -- Image principale
@@ -23,6 +24,9 @@ local soundPathMoula = "Interface\\AddOns\\DDPoulet\\data\\heymoula.mp3"  -- Nou
 local soundPathHakaza = "Interface\\AddOns\\DDPoulet\\data\\hakaza_fourmis.mp3"  -- Nouveau son pour "hakaza fourmis"
 local soundPathResistar = "Interface\\AddOns\\DDPoulet\\data\\resistar1.mp3"
 local soundPathResistar2 = "Interface\\AddOns\\DDPoulet\\data\\resistar_aidezmoi.mp3"
+
+-- Variable pour suivre si la santé est sous les 20%
+local isBelow20Percent = false
 
 -- Fonction pour jouer un son aléatoire parmi les variantes de soundPaths1
 local function PlayRandomChickenSound()
@@ -83,21 +87,40 @@ local function ShowImageAndSound()
     end
 end
 
--- Fonction principale pour intercepter les messages de chat
-local function OnEvent(self, event, message, sender, ...)
-    if message:lower():find("doigt de poulet") then  -- Vérifie si le message contient "doigt de poulet"
-        ShowImageAndSound()
-    elseif message:lower():find("moula") then  -- Vérifie si le message contient "moula"
-        if DDPouletDB.playSound then
-            PlayMoulaSound()  -- Joue le son "moula"
+-- Fonction principale pour intercepter les messages de chat et surveiller la santé
+local function OnEvent(self, event, ...)
+    if event == "UNIT_HEALTH" then
+        local unit = ...
+        if unit == "player" then
+            local health = UnitHealth("player")  -- Récupère la santé actuelle du joueur
+            local maxHealth = UnitHealthMax("player")  -- Récupère la santé maximale du joueur
+            local healthPercent = (health / maxHealth) * 100  -- Calcul du pourcentage de vie restante
+
+            if healthPercent <= 20 and not isBelow20Percent then
+                -- Si la santé est sous les 20% et que le son n'a pas encore été joué
+                PlayResistarSound()  -- Joue le son "resistar_aidezmoi.mp3"
+                isBelow20Percent = true  -- Marque que le son a été joué
+            elseif healthPercent > 20 and isBelow20Percent then
+                -- Si la santé remonte au-dessus de 20%, réinitialise la variable
+                isBelow20Percent = false
+            end
         end
-    elseif message:lower():find("hakaza fourmis") then  -- Vérifie si le message contient "hakaza fourmis"
-        if DDPouletDB.playSound then
-            PlayHakazaSound()  -- Joue le son "hakaza fourmis"
-        end
-    elseif message:lower():find("putain") then  -- Vérifie si le message contient "putain"
-        if DDPouletDB.playSound then
-            PlayResistar1Sound()  -- Joue le son "resistar1.mp3"
+    else
+        local message, sender = ...
+        if message:lower():find("doigt de poulet") then  -- Vérifie si le message contient "doigt de poulet"
+            ShowImageAndSound()
+        elseif message:lower():find("moula") then  -- Vérifie si le message contient "moula"
+            if DDPouletDB.playSound then
+                PlayMoulaSound()  -- Joue le son "moula"
+            end
+        elseif message:lower():find("hakaza fourmis") then  -- Vérifie si le message contient "hakaza fourmis"
+            if DDPouletDB.playSound then
+                PlayHakazaSound()  -- Joue le son "hakaza fourmis"
+            end
+        elseif message:lower():find("putain") then  -- Vérifie si le message contient "putain"
+            if DDPouletDB.playSound then
+                PlayResistar1Sound()  -- Joue le son "resistar1.mp3"
+            end
         end
     end
 end
