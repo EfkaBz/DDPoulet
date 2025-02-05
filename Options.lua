@@ -92,7 +92,7 @@ welcomeFrame.title:SetText("DDPoulet, bienvenue")
 -- Ajouter un message de bienvenue dans la fenêtre avec une police plus petite
 local welcomeMessage = welcomeFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 welcomeMessage:SetPoint("TOP", welcomeFrame, "TOP", 0, -30)
-welcomeMessage:SetText("\nWow la 2.2 de Doigt De Poulet est la !\nTU DEKALISS ESPECE DE **** *****\n\nDoigt de poulet dans le chat !\n\nHAKAZA FOURMIS !\nHEY MOULA ?\nCréé par Daeler l'annihilateur")
+welcomeMessage:SetText("\nLa v3.0.0 de Doigt De Poulet est la !\nTU DEKALISS ESPECE DE **** *****\n\nDoigt de poulet dans le chat !\n\nHAKAZA FOURMIS !\nHEY MOULA ?\nCréé par Daeler l'annihilateur")
 
 -- Ajouter l'icône de DDPoulet dans la fenêtre de bienvenue (positionnée en bas à droite)
 local icon = welcomeFrame:CreateTexture(nil, "OVERLAY")
