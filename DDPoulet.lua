@@ -25,6 +25,7 @@ local soundPathHakaza = "Interface\\AddOns\\DDPoulet\\data\\hakaza_fourmis.mp3" 
 local soundPathResistar = "Interface\\AddOns\\DDPoulet\\data\\resistar1.mp3"
 local soundPathResistar2 = "Interface\\AddOns\\DDPoulet\\data\\resistar_aidezmoi.mp3"
 local soundPathIka = "Interface\\AddOns\\DDPoulet\\data\\tudekaliss.mp3"  -- Nouveau son pour "Ika"
+local soundPathDaeler = "Interface\\AddOns\\DDPoulet\\data\\daelerback.mp3"
 
 -- Variable pour suivre si la santé est sous les 20%
 local isBelow20Percent = false
@@ -68,6 +69,11 @@ end
 -- Fonction pour jouer le son "tudekaliss" (quand "ika" est détecté)
 local function PlayIkaSound()
     PlaySoundFile(soundPathIka, "Master")  -- Joue le son "tudekaliss.mp3"
+end
+
+-- Fonction pour jouer le son "daelerback" (quand "daeler" est détecté)
+local function PlayDaelerSound()
+    PlaySoundFile(soundPathDaeler, "Master")  -- Joue le son "daelerback.mp3"
 end
 
 -- Initialisation de la base de données si elle n'existe pas
@@ -134,6 +140,10 @@ local function OnEvent(self, event, ...)
         elseif message:lower():find("ikalyss") then  -- Vérifie si le message contient "ika"
             if DDPouletDB.playSound then
                 PlayIkaSound()  -- Joue le son "tudekaliss.mp3"
+            end
+        elseif message:lower():find("daeler") then  -- Vérifie si le message contient "daeler"
+            if DDPouletDB.playSound then
+                PlayDaelerSound()  -- Joue le son "daelerback.mp3"
             end
         end
     end
