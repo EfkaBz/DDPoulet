@@ -12,20 +12,20 @@ frame:RegisterEvent("CHAT_MSG_CHANNEL")
 frame:RegisterEvent("UNIT_HEALTH")  -- Ajout de l'événement pour surveiller la santé
 
 -- Chemins vers l'image et les sons
-local imagePath = "Interface\\AddOns\\DDPoulet\\data\\DDPoulet.tga"  -- Image principale
+local imagePath = "Interface\\AddOns\\DDPoulet\\data\\pics\\DDPoulet.tga"  -- Image principale
 local soundPaths1 = {  
-    "Interface\\AddOns\\DDPoulet\\data\\DDPoulet.mp3",
-    "Interface\\AddOns\\DDPoulet\\data\\DDPoulet2.mp3",
-    "Interface\\AddOns\\DDPoulet\\data\\DDPoulet3.mp3",
-    "Interface\\AddOns\\DDPoulet\\data\\DDPoulet4.mp3"
+    "Interface\\AddOns\\DDPoulet\\data\\sounds\\DDPoulet.mp3",
+    "Interface\\AddOns\\DDPoulet\\data\\sounds\\DDPoulet2.mp3",
+    "Interface\\AddOns\\DDPoulet\\data\\sounds\\DDPoulet3.mp3",
+    "Interface\\AddOns\\DDPoulet\\data\\sounds\\DDPoulet4.mp3"
 }
-local soundPath2 = "Interface\\AddOns\\DDPoulet\\data\\ChickenDeathA.ogg"  -- Son du poulet
-local soundPathMoula = "Interface\\AddOns\\DDPoulet\\data\\heymoula.mp3"  -- Nouveau son pour "moula"
-local soundPathHakaza = "Interface\\AddOns\\DDPoulet\\data\\hakaza_fourmis.mp3"  -- Nouveau son pour "hakaza fourmis"
-local soundPathResistar = "Interface\\AddOns\\DDPoulet\\data\\resistar1.mp3"
-local soundPathResistar2 = "Interface\\AddOns\\DDPoulet\\data\\resistar_aidezmoi.mp3"
-local soundPathIka = "Interface\\AddOns\\DDPoulet\\data\\tudekaliss.mp3"  -- Nouveau son pour "Ika"
-local soundPathDaeler = "Interface\\AddOns\\DDPoulet\\data\\daelerback.mp3"
+local soundPath2 = "Interface\\AddOns\\DDPoulet\\data\\sounds\\ChickenDeathA.ogg"  -- Son du poulet
+local soundPathMoula = "Interface\\AddOns\\DDPoulet\\data\\sounds\\heymoula.mp3"
+local soundPathHakaza = "Interface\\AddOns\\DDPoulet\\data\\sounds\\hakaza_fourmis.mp3"
+local soundPathResistar = "Interface\\AddOns\\DDPoulet\\data\\sounds\\resistar1.mp3"
+local soundPathResistar2 = "Interface\\AddOns\\DDPoulet\\data\\sounds\\resistar_aidezmoi.mp3"
+local soundPathIka = "Interface\\AddOns\\DDPoulet\\data\\sounds\\tudekaliss.mp3"
+local soundPathDaeler = "Interface\\AddOns\\DDPoulet\\data\\sounds\\daelerback.mp3"
 
 -- Variable pour suivre si la santé est sous les 20%
 local isBelow20Percent = false
