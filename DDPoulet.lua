@@ -31,6 +31,10 @@ local soundPathgg = "Interface\\AddOns\\DDPoulet\\data\\sounds\\tu_vie.mp3"
 -- Variable pour suivre si la santé est sous les 20%
 local isBelow20Percent = false
 
+-- Variable pour suivre le dernier moment où le son "tu_vie.mp3" a été joué
+local lastPlayedTime = 0
+local cooldownDuration = 20  -- Cooldown de 20 secondes
+
 -- Fonction pour jouer un son aléatoire parmi les variantes de soundPaths1
 local function PlayRandomChickenSound()
     if #soundPaths1 > 0 then
@@ -77,9 +81,17 @@ local function PlayDaelerSound()
     PlaySoundFile(soundPathDaeler, "Master")  -- Joue le son "daelerback.mp3"
 end
 
--- Fonction pour jouer le son "tu_vie" (quand "daeler" est détecté)
+-- Fonction pour jouer le son "tu_vie" (quand "gg" est détecté)
 local function PlayggSound()
-    PlaySoundFile(soundPathgg, "Master")  -- Joue le son "tu_vie.mp3"
+    local currentTime = GetTime()  -- Récupère le temps actuel en secondes
+
+    -- Vérifie si le cooldown est écoulé
+    if currentTime - lastPlayedTime >= cooldownDuration then
+        PlaySoundFile(soundPath, "Master")  -- Joue le son "tu_vie.mp3" GG RETIRER DE SOUNDPATH CAR PETE COUILLE IN GAME EN FAIT
+        lastPlayedTime = currentTime  -- Met à jour le timestamp du dernier jeu
+    else
+        
+    end
 end
 
 -- Initialisation de la base de données si elle n'existe pas
@@ -153,7 +165,7 @@ local function OnEvent(self, event, ...)
             end
         elseif message:lower():find("gg") then  -- Vérifie si le message contient "gg"
             if DDPouletDB.playSound then
-                PlayggSound()  -- Joue le son "tu_vie.mp3"
+                PlayggSound()  -- Joue le son "tu_vie.mp3" avec cooldown
             end
         end
     end
