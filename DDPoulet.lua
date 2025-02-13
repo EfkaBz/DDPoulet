@@ -12,6 +12,7 @@ frame:RegisterEvent("CHAT_MSG_CHANNEL")
 frame:RegisterEvent("UNIT_HEALTH")  -- Ajout de l'événement pour surveiller la santé
 
 -- Chemins vers l'image et les sons
+-- Reprendre les paths
 local imagePath = "Interface\\AddOns\\DDPoulet\\data\\pics\\DDPoulet.tga"  -- Image principale
 local soundPaths1 = {  
     "Interface\\AddOns\\DDPoulet\\data\\sounds\\DDPoulet.mp3",
@@ -19,14 +20,33 @@ local soundPaths1 = {
     "Interface\\AddOns\\DDPoulet\\data\\sounds\\DDPoulet3.mp3",
     "Interface\\AddOns\\DDPoulet\\data\\sounds\\DDPoulet4.mp3"
 }
-local soundPath2 = "Interface\\AddOns\\DDPoulet\\data\\sounds\\ChickenDeathA.ogg"  -- Son du poulet
-local soundPathMoula = "Interface\\AddOns\\DDPoulet\\data\\sounds\\heymoula.mp3"
-local soundPathHakaza = "Interface\\AddOns\\DDPoulet\\data\\sounds\\hakaza_fourmis.mp3"
-local soundPathResistar = "Interface\\AddOns\\DDPoulet\\data\\sounds\\resistar1.mp3"
-local soundPathResistar2 = "Interface\\AddOns\\DDPoulet\\data\\sounds\\resistar_aidezmoi.mp3"
-local soundPathIka = "Interface\\AddOns\\DDPoulet\\data\\sounds\\tudekaliss.mp3"
-local soundPathDaeler = "Interface\\AddOns\\DDPoulet\\data\\sounds\\daelerback.mp3"
-local soundPathgg = "Interface\\AddOns\\DDPoulet\\data\\sounds\\tu_vie.mp3"
+
+local sounds = {
+    chicken = "Interface\\AddOns\\DDPoulet\\data\\sounds\\ChickenDeathA.ogg" , -- Son du poulet
+    moula = "Interface\\AddOns\\DDPoulet\\data\\sounds\\heymoula.mp3",
+    hakaza = "Interface\\AddOns\\DDPoulet\\data\\sounds\\hakaza_fourmis.mp3",
+    resistar = "Interface\\AddOns\\DDPoulet\\data\\sounds\\resistar1.mp3",
+    resistar2 = "Interface\\AddOns\\DDPoulet\\data\\sounds\\resistar_aidezmoi.mp3",
+    ika = "Interface\\AddOns\\DDPoulet\\data\\sounds\\tudekaliss.mp3",
+    daeler = "Interface\\AddOns\\DDPoulet\\data\\sounds\\daelerback.mp3",
+    gg = "Interface\\AddOns\\DDPoulet\\data\\sounds\\tu_vie.mp3",
+}
+-- Récupère le nom des sons
+local names = {}
+for k in pairs(sounds) do
+  print(k)
+    table.insert(names, k)
+end
+
+-- Récupère le chemin des sons
+for _, n in ipairs(names) do
+    print(sounds[n])
+end
+
+local function PlaySound(path)
+    PlaySoundFile(path, "Master")
+end
+
 
 -- Variable pour suivre si la santé est sous les 20%
 local isBelow20Percent = false
@@ -42,7 +62,7 @@ local function PlayRandomChickenSound()
         local soundFile = soundPaths1[randomIndex]  -- Récupère le chemin du son
         
         if soundFile then
-            PlaySoundFile(soundFile, "Master")  -- Joue le son aléatoire
+            PlayggSound(soundFile)  -- Joue le son aléatoire
         else
             print("Erreur : Aucun fichier son trouvé !")
         end
@@ -50,37 +70,6 @@ local function PlayRandomChickenSound()
         print("Erreur : Aucune variante de son disponible !")
     end
 end
-
--- Fonction pour jouer le son "moula"
-local function PlayMoulaSound()
-    PlaySoundFile(soundPathMoula, "Master")  -- Joue le son "moula"
-end
-
--- Fonction pour jouer le son "hakaza fourmis"
-local function PlayHakazaSound()
-    PlaySoundFile(soundPathHakaza, "Master")  -- Joue le son "hakaza_fourmis"
-end
-
--- Fonction pour jouer le son "resistar aidez moi"
-local function PlayResistarSound()
-    PlaySoundFile(soundPathResistar2, "Master")  -- Joue le son "resistar_aidezmoi"
-end
-
--- Fonction pour jouer le son "resistar1" (quand "putain" est détecté)
-local function PlayResistar1Sound()
-    PlaySoundFile(soundPathResistar, "Master")  -- Joue le son "resistar1.mp3"
-end
-
--- Fonction pour jouer le son "tudekaliss" (quand "ika" est détecté)
-local function PlayIkaSound()
-    PlaySoundFile(soundPathIka, "Master")  -- Joue le son "tudekaliss.mp3"
-end
-
--- Fonction pour jouer le son "daelerback" (quand "daeler" est détecté)
-local function PlayDaelerSound()
-    PlaySoundFile(soundPathDaeler, "Master")  -- Joue le son "daelerback.mp3"
-end
-
 -- Fonction pour jouer le son "tu_vie" (quand "gg" est détecté)
 local function PlayggSound()
     local currentTime = GetTime()  -- Récupère le temps actuel en secondes
@@ -96,7 +85,8 @@ end
 
 -- Initialisation de la base de données si elle n'existe pas
 DDPouletDB = DDPouletDB or { showImage = true, playSound = true }
-
+if DDPouletDB.playSound == false then return 0
+    
 -- Création de la texture pour afficher l'image
 frame.texture = frame:CreateTexture(nil, "BACKGROUND")
 frame.texture:SetTexture(imagePath)
@@ -113,12 +103,13 @@ local function ShowImageAndSound()
 
     if DDPouletDB.playSound then
         PlayRandomChickenSound()  -- Joue un son aléatoire
-        C_Timer.After(2, function() PlaySoundFile(soundPath2, "Master") end)  -- Joue le son du poulet après 2s
+        C_Timer.After(2, function() PlaySound(soundPath2) end)  -- Joue le son du poulet après 2s
     end
 end
 
 -- Fonction principale pour intercepter les messages de chat et surveiller la santé
 local function OnEvent(self, event, ...)
+    if DDPouletDB.playSound == false end
     if event == "UNIT_HEALTH" then
         local unit = ...
         if unit == "player" then
@@ -128,7 +119,7 @@ local function OnEvent(self, event, ...)
 
             if healthPercent <= 20 and not isBelow20Percent then
                 -- Si la santé est sous les 20% et que le son n'a pas encore été joué
-                PlayResistarSound()  -- Joue le son "resistar_aidezmoi.mp3"
+                PlaySound("resistar2")  -- Joue le son "resistar_aidezmoi.mp3"
                 isBelow20Percent = true  -- Marque que le son a été joué
             elseif healthPercent > 20 and isBelow20Percent then
                 -- Si la santé remonte au-dessus de 20%, réinitialise la variable
@@ -139,35 +130,8 @@ local function OnEvent(self, event, ...)
         local message, sender = ...
         if message:lower():find("doigt de poulet") then  -- Vérifie si le message contient "doigt de poulet"
             ShowImageAndSound()
-        elseif message:lower():find("moula") then  -- Vérifie si le message contient "moula"
-            if DDPouletDB.playSound then
-                PlayMoulaSound()  -- Joue le son "moula"
-            end
-        elseif message:lower():find("hakaza fourmis") then  -- Vérifie si le message contient "hakaza fourmis"
-            if DDPouletDB.playSound then
-                PlayHakazaSound()  -- Joue le son "hakaza fourmis"
-            end
-        elseif message:lower():find("putain") then  -- Vérifie si le message contient "putain"
-            if DDPouletDB.playSound then
-                PlayResistar1Sound()  -- Joue le son "resistar1.mp3"
-            end
-        elseif message:lower():find("ika") then  -- Vérifie si le message contient "ika"
-            if DDPouletDB.playSound then
-                PlayIkaSound()  -- Joue le son "tudekaliss.mp3"
-            end
-        elseif message:lower():find("ikalyss") then  -- Vérifie si le message contient "ika"
-            if DDPouletDB.playSound then
-                PlayIkaSound()  -- Joue le son "tudekaliss.mp3"
-            end
-        elseif message:lower():find("daeler") then  -- Vérifie si le message contient "daeler"
-            if DDPouletDB.playSound then
-                PlayDaelerSound()  -- Joue le son "daelerback.mp3"
-            end
-        elseif message:lower():find("gg") then  -- Vérifie si le message contient "gg"
-            if DDPouletDB.playSound then
-                PlayggSound()  -- Joue le son "tu_vie.mp3" avec cooldown
-            end
-        end
+        elseif sounds[message] == false end
+        else PlaySound(message) end
     end
 end
 
@@ -189,9 +153,9 @@ SlashCmdList["DDPRESISTARTEST"] = function()
 
     -- Si la vie est inférieure à 20%, joue le son, sinon force le test
     if healthPercent < 20 then
-        PlaySoundFile(soundPathResistar2, "Master")
+        PlaySound(soundPathResistar2)
     else
         print("Test forcé : Simule une vie inférieure à 20%.")
-        PlaySoundFile(soundPathResistar2, "Master")  -- Joue le son "resistar_aidezmoi.mp3"
+        PlaySound(soundPathResistar2)
     end
 end
