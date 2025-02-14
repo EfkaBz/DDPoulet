@@ -26,14 +26,9 @@ local soundPathResistar = "Interface\\AddOns\\DDPoulet\\data\\sounds\\resistar1.
 local soundPathResistar2 = "Interface\\AddOns\\DDPoulet\\data\\sounds\\resistar_aidezmoi.mp3"
 local soundPathIka = "Interface\\AddOns\\DDPoulet\\data\\sounds\\tudekaliss.mp3"
 local soundPathDaeler = "Interface\\AddOns\\DDPoulet\\data\\sounds\\daelerback.mp3"
-local soundPathgg = "Interface\\AddOns\\DDPoulet\\data\\sounds\\tu_vie.mp3"
 
 -- Variable pour suivre si la santé est sous les 20%
 local isBelow20Percent = false
-
--- Variable pour suivre le dernier moment où le son "tu_vie.mp3" a été joué
-local lastPlayedTime = 0
-local cooldownDuration = 20  -- Cooldown de 20 secondes
 
 -- Fonction pour jouer un son aléatoire parmi les variantes de soundPaths1
 local function PlayRandomChickenSound()
@@ -71,7 +66,7 @@ local function PlayResistar1Sound()
     PlaySoundFile(soundPathResistar, "Master")  -- Joue le son "resistar1.mp3"
 end
 
--- Fonction pour jouer le son "tudekaliss" (quand "ika" est détecté)
+-- Fonction pour jouer le son "tudekaliss" (quand "Ikalyss" est détecté)
 local function PlayIkaSound()
     PlaySoundFile(soundPathIka, "Master")  -- Joue le son "tudekaliss.mp3"
 end
@@ -79,19 +74,6 @@ end
 -- Fonction pour jouer le son "daelerback" (quand "daeler" est détecté)
 local function PlayDaelerSound()
     PlaySoundFile(soundPathDaeler, "Master")  -- Joue le son "daelerback.mp3"
-end
-
--- Fonction pour jouer le son "tu_vie" (quand "gg" est détecté)
-local function PlayggSound()
-    local currentTime = GetTime()  -- Récupère le temps actuel en secondes
-
-    -- Vérifie si le cooldown est écoulé
-    if currentTime - lastPlayedTime >= cooldownDuration then
-        PlaySoundFile(soundPath, "Master")  -- Joue le son "tu_vie.mp3" GG RETIRER DE SOUNDPATH CAR PETE COUILLE IN GAME EN FAIT
-        lastPlayedTime = currentTime  -- Met à jour le timestamp du dernier jeu
-    else
-        
-    end
 end
 
 -- Initialisation de la base de données si elle n'existe pas
@@ -151,21 +133,13 @@ local function OnEvent(self, event, ...)
             if DDPouletDB.playSound then
                 PlayResistar1Sound()  -- Joue le son "resistar1.mp3"
             end
-        elseif message:lower():find("ika") then  -- Vérifie si le message contient "ika"
-            if DDPouletDB.playSound then
-                PlayIkaSound()  -- Joue le son "tudekaliss.mp3"
-            end
-        elseif message:lower():find("ikalyss") then  -- Vérifie si le message contient "ika"
+        elseif message:lower():find("ikalyss") then  -- Vérifie si le message contient "ikalyss"
             if DDPouletDB.playSound then
                 PlayIkaSound()  -- Joue le son "tudekaliss.mp3"
             end
         elseif message:lower():find("daeler") then  -- Vérifie si le message contient "daeler"
             if DDPouletDB.playSound then
                 PlayDaelerSound()  -- Joue le son "daelerback.mp3"
-            end
-        elseif message:lower():find("gg") then  -- Vérifie si le message contient "gg"
-            if DDPouletDB.playSound then
-                PlayggSound()  -- Joue le son "tu_vie.mp3" avec cooldown
             end
         end
     end

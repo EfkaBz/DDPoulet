@@ -93,7 +93,7 @@ welcomeFrame.title:SetText("DDPoulet, bienvenue")
 local welcomeMessage = welcomeFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 welcomeMessage:SetFont("Fonts\\FRIZQT__.TTF", 10.5)  -- Ajuste la taille (ex: 16)
 welcomeMessage:SetPoint("TOP", welcomeFrame, "TOP", 0, -30)
-welcomeMessage:SetText("\nLa v3.0.2 de Doigt De Poulet est la!\n\nNouveautée!\n\nAjout d'un sommaire des sons\n/ddpsons\nOu dans le menu interface")
+welcomeMessage:SetText("\nLa v3.0.4 de Doigt De Poulet est la!\n\nNouveautée!\n\nAjout d'un sommaire des sons\n/ddpsons\nOu dans le menu interface")
 
 -- Ajouter l'icône de DDPoulet dans la fenêtre de bienvenue (positionnée en bas à droite)
 local icon = welcomeFrame:CreateTexture(nil, "OVERLAY")
