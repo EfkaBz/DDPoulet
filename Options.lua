@@ -93,7 +93,7 @@ welcomeFrame.title:SetText("DDPoulet, bienvenue")
 local welcomeMessage = welcomeFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 welcomeMessage:SetFont("Fonts\\FRIZQT__.TTF", 10.5)  -- Ajuste la taille (ex: 16)
 welcomeMessage:SetPoint("TOP", welcomeFrame, "TOP", 0, -30)
-welcomeMessage:SetText("\nLa v3.0.4 de Doigt De Poulet est la!\n\nNouveautée!\n\nAjout d'un sommaire des sons\n/ddpsons\nOu dans le menu interface")
+welcomeMessage:SetText("\nLa v3.0.5 de Doigt De Poulet est la!\n\nNouveautée!\n\nAjout d'un sommaire des sons\n/ddpsons\nOu dans le menu interface")
 
 -- Ajouter l'icône de DDPoulet dans la fenêtre de bienvenue (positionnée en bas à droite)
 local icon = welcomeFrame:CreateTexture(nil, "OVERLAY")
@@ -130,7 +130,7 @@ background:SetPoint("CENTER", panel, "CENTER", 0, -50)  -- Centre l’image dans
 
 -- Créer la fenêtre "Sommaire des sons"
 local soundSummaryFrame = CreateFrame("Frame", "DDSoundSummaryFrame", UIParent, "BasicFrameTemplateWithInset")
-soundSummaryFrame:SetSize(250, 400)
+soundSummaryFrame:SetSize(250, 500)
 soundSummaryFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
 soundSummaryFrame:Hide()
 
@@ -199,6 +199,7 @@ local soundList = {
     { name = "AIDEZ-MOI", path = "Interface\\AddOns\\DDPoulet\\data\\sounds\\resistar_aidezmoi.mp3" },
     { name = "Tu Dekaliss", path = "Interface\\AddOns\\DDPoulet\\data\\sounds\\tudekaliss.mp3" },
     { name = "Daeler Back !", path = "Interface\\AddOns\\DDPoulet\\data\\sounds\\daelerback.mp3" },
+    { name = "Brutalité !", path = "Interface\\AddOns\\DDPoulet\\data\\sounds\\brutalite.mp3" },
 }
 
 -- Ajouter les boutons pour chaque son
